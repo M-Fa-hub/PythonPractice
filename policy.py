@@ -37,6 +37,6 @@ def load_policy(path):
     try:
         with open(path, "r") as f:
             data = json.load(f)
-        return data
     except FileNotFoundError:
-        raise PolicyError(f"Policy file not found: {path}")
+        raise PolicyError("File not found: " + path)
+    return Policy(data)

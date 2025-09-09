@@ -5,7 +5,7 @@ import datetime
 
 polici = load_policy("policies.json")   # Load policy from JSON file
 
-class get_return:
+class loan_return:
     def __init__(self, polici, item, member, #loan_id
                  ):
         self.polici = polici
@@ -37,8 +37,6 @@ class get_return:
             return True
         return False
             
-
-
 class Reservation():
     def __init__(self, item):
         self.item = item
@@ -62,25 +60,31 @@ class Reservation():
 
 
 class Fine():
-    def __init__(self, member, amount, reason):
+    def __init__(self, polici, member, amount, reason):
         # self.fine_id = fine_id    generate unique ID
+        self.polici = polici
         self.member = member
         self.amount = amount
         self.reason = reason
         self.date_issued = datetime.date.today()
         self.paid = False
 
-    def pay_fine(self, amount):
-        pass
+    def pay_fine(self):
+        self.paid = True
+        return  f'fine of {self.amount} paid by member {self.member.member_id}'
 
     def waive_fine(self):
-        pass
+        self.paid = True
+        
 
     def get_fine_details(self):
-        pass
-
-    def is_setteled():
-        pass
+        return {
+            "member": self.member.member_id,
+            "amount": self.amount,
+            "reason": self.reason,
+            "date_issued": self.date_issued,
+            "paid": self.paid
+        }
 
 
 

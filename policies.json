@@ -10,6 +10,6 @@
     "AudioBook": { "loan_days": 14, "daily_fine": 0.75 }
   },
   "rules": {
-    "grace_days": { "Student": 1, "Staff": 3, "External": 0 }
+    "fine": { "Student": 2, "Staff": 3, "External": 5 }
   }
 }

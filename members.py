@@ -1,63 +1,45 @@
 
 class Member():
-    def __init__(self, member_id, name, email, member_type, active_loans, fine_account):
-        self.member_id = member_id
+    def __init__(self, name, email):
+        # self.member_id = call a function to generate unique ID
+        # self.member_id = name[:2] + email.split('@')[0][-2:]
+
         self.name = name
         self.email = email
-        self.member_type = member_type
-        self.active_loans = active_loans
-        self.fine_account = fine_account
+        self.active_loans = False
         self.borrowed_items = []
 
 
+    def cearte_account(self):
+        return f"Account created for {self.name} with email {self.email} as {self.member_type} member."
 
-
-    def check_out(self, item):
-        pass
-
-
-    def return_item(self, item):
-        pass
-
-    def renew(self, item):
-        pass
-
-
-    def reserve(self, item):
-        pass
-
-
-    def pay_fine(self, amount):
-        pass
-
-    def get_info(self):
-        pass
+    
+    def deactivate_account(self):
+        if not self.active_loans:
+            return f"Account for {self.name} deactivated."
+        else:
+            return f"Cannot deactivate account for {self.name}. Active loans exist."
 
 
 
 
 class StudentMember(Member):
-    def __init__(self, member_id, name, email, member_type, active_loans, fine_account, max_loans, student_id):
-        super().__init__(member_id, name, email, member_type, active_loans, fine_account)
+    def __init__(self, name, email, student_id):
+        super().__init__(self, name, email )
         self.student_id = student_id
-        self.max_load = max_loans
-        # self.borrowed_items = []
-
+        self.member_type = "Student"
 
 
 class StaffMember(Member):
-    def __init__(self, member_id, name, email, member_type, active_loans, fine_account, max_loans, staff_id):
-        super().__init__(member_id, name, email, member_type, active_loans, fine_account)
+    def __init__(self, name, email, staff_id):
+        super().__init__(self, name, email)
         self.staff_id = staff_id
-        self.max_load = max_loans
-        # self.borrowed_items = []
+        self.member_type = "Staff"
 
 
 class ExternalMember(Member):
-    def __init__(self, member_id, name, email, member_type, active_loans, fine_account, max_loans, organization, address):
-        super().__init__(member_id, name, email, member_type, active_loans, fine_account)
-        self.organization = organization
-        self.address = address
-        self.max_load = max_loans
-        # self.borrowed_items = []
+    def __init__(self, name, email, id_number):
+        super().__init__(self, name, email)
+        self.id_number = id_number
+        self.member_type = "citizen"
 

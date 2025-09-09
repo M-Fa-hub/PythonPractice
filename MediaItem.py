@@ -7,92 +7,99 @@ class MediaItem(ABC):
 #all the methods and attributes are abstract and must be implemented in the child classes
 #all media items must have a title, year, unique serial number, status, loan period, and publisher
 
-    @abstractmethod
-    def __init__(self, id, title, author, year, status, loan_period, publisher):
-        self.id = id
-        self.title = title
-        self.author = author
-        self.year = year
-        self.status = status
-        self.loan_period = loan_period
-        self.publisher = publisher
+    def __init__(self, id, title, author, year, publisher):
+        self._id = id # unique identifier
+        self._status = "Available"  # Available, Checked Out, Reserved
+        self._title = title
+        self._author = author
+        self._year = year
+        self._publisher = publisher
+        self._current_borrower = None
+        self._due_date = None
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def title(self):
+        return self._title
+
+    @property
+    def author(self):
+        return self._author
+
+    @property
+    def status(self):
+        return self._status
 
 
-    @abstractmethod
-    def check_out(self, borrower):
-        pass
-
-
-    @abstractmethod
-    def return_item(self):
-        pass
-
-
-    @abstractmethod
     def get_due_date(self):
-        pass
+        return self._due_date
 
-
-
-    @abstractmethod
     def get_info(self):
-        pass
+        return {
+            "id": self._id,
+            "title": self._title,
+            "author": self._author,
+            "year": self._year,
+            "status": self._status,
+            "publisher": self._publisher
+        }
 
-
-
-    @abstractmethod
     def is_overdue(self):
-        pass
+        if self._status == "Checked Out" and self._due_date:
+            return datetime.now() > self._due_date
+        return False
 
-
-    @abstractmethod
     def is_available(self):
-        pass    
-
-
+        return self._status == "Available"
 
 class Book(MediaItem):
-    def __init__(self, id, title, author, year, status, loan_period, publisher, pages, isbn):
-        super().__init__(id, title, author, year, status, loan_period, publisher) 
-        self.pages = pages
-        self.isbn = isbn
-
-
-    
-    def check_out(self, borrower):
-        pass
-
-
-    def return_item(self):
-        pass
-
-
-    def get_due_date(self):
-        pass
-
-
+    def __init__(self, id, title, author, year, publisher, pages, isbn):
+        super().__init__(id, title, author, year, publisher)
+        self._pages = pages
+        self._isbn = isbn
+        self.item_type = "Book"
 
     def get_info(self):
-        pass
-
-
-
-    def is_overdue(self):
-        pass
-
-
-    def is_available(self):
-        pass  
+        info = super().get_info()
+        info.update({
+            "pages": self._pages,
+            "isbn": self._isbn,
+            "type": "Book"
+        })
+        return info
 
 class EBook(MediaItem):
-        def __init__(self, id, title, author, year, status, loan_period, publisher, file_format, file_size):
-            super().__init__(id, title, author, year, status, loan_period, publisher)
-            self.file_format = file_format
-            self.file_size = file_size
+    def __init__(self, id, title, author, year, publisher, file_format, file_size):
+        super().__init__(id, title, author, year, publisher)
+        self._file_format = file_format
+        self._file_size = file_size
+        self.item_type = "EBook"
 
+    def get_info(self):
+        info = super().get_info()
+        info.update({
+            "file_format": self._file_format,
+            "file_size": self._file_size,
+            "type": "EBook"
+        })
+        return info
 
 class AudioBook(MediaItem):
-        def __init__(self, id, title, author, year, status, loan_period, publisher, narrator, duration):
-            super().__init__(id, title, author, year, status, loan_period, publisher)
-            self.narrator = narrator
-            self.duration = duration
+    def __init__(self, id, title, author, year, publisher, narrator, duration):
+        super().__init__(id, title, author, year, publisher)
+        self._narrator = narrator
+        self._duration = duration
+        self.item_type = "AudioBook"
+        
+
+    def get_info(self):
+        info = super().get_info()
+        info.update({
+            "narrator": self._narrator,
+            "duration": self._duration,
+            "type": "AudioBook"
+        })
+        return info

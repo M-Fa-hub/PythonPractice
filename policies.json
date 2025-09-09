@@ -1,0 +1,15 @@
+{
+  "members": {
+    "Student":  { "max_loans": 3 },
+    "Staff":    { "max_loans": 10 },
+    "External": { "max_loans": 2 }
+  },
+  "items": {
+    "Book":      { "loan_days": 14, "daily_fine": 0.5 },
+    "EBook":     { "loan_days": 21, "daily_fine": 0.0 },
+    "AudioBook": { "loan_days": 14, "daily_fine": 0.75 }
+  },
+  "rules": {
+    "grace_days": { "Student": 1, "Staff": 3, "External": 0 }
+  }
+}

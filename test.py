@@ -1,8 +1,14 @@
-import json
-import os
+class MyClass:
+    def __init__(self, value):
+        self._value = value
+    
+    @property
+    def value(self):
+        return 545
+    
 
-print("Current working directory:", os.getcwd())
-with open("policies.json", "r") as f:
-    data = json.load(f)
+class1 = MyClass(10)
 
-print(data)
+
+print(class1.value)
+print(class1._value)

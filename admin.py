@@ -85,6 +85,11 @@ class Fine():
             "date_issued": self.date_issued,
             "paid": self.paid
         }
+    
+    # ?????? should be modified
+    def calculate_fine(self, days_overdue):
+        rate = self.polici.fine_rate(self.member.member_type)
+        return days_overdue * rate
 
 
 

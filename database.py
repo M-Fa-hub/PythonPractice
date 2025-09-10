@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import datetime
+from datetime import datetime, deltatime
 
 class DatabaseManager:
     def __init__(self, db_name="library.db"):
@@ -116,7 +116,7 @@ class DatabaseManager:
     def add_loan(self, member_id, item_id, due_days=14):
         """Create a loan record"""
         loan_date = datetime.now().strftime('%Y-%m-%d')
-        due_date = (datetime.now() + timedelta(days=due_days)).strftime('%Y-%m-%d')
+        due_date = (datetime.now() + deltatime(days=due_days)).strftime('%Y-%m-%d')
 
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
